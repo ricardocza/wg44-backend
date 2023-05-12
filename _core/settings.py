@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dotenv
+
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-g4s40k$=0^l%^-&!f*a3ey_a*1ds@u&kb52#t&+3%v2@wh*(f5"
+SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,9 +46,11 @@ DJANGO_APPS = [
 
 THIRDY_PARTY_APPS = ["rest_framework"]
 
-MY_APPS = ["main"]
+MY_APPS = ["db_logic", "users"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDY_PARTY_APPS + MY_APPS
+
+AUTH_USER_MODEL = "users.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -81,8 +88,12 @@ WSGI_APPLICATION = "_core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB_NAME"),
+        "USER": os.getenv("POSTGRES_USERNAME"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_DB_HOST"),
+        "PORT": os.getenv("POSTGRES_DB_PORT"),
     }
 }
 
