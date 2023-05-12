@@ -13,8 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "password",
             "is_superuser",
+            "is_staff",
         ]
-        read_only_fields = ["is_superuser"]
+
+        extra_kwargs = {"password": {"write_only": True}}
 
         username = serializers.CharField(
             validators=[
