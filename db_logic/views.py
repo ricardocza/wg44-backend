@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .serializers import StocksSerializer
 from .models import Stocks
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .permissions import PostPermission
 
 
 # Create your views here.
@@ -10,6 +14,8 @@ class StocksView(generics.ListCreateAPIView):
     serializer_class = StocksSerializer
     queryset = Stocks.objects.all()
     lookup_field = "ticker"
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [PostPermission]
 
     def perform_create(self, serializer):
         count = Stocks.objects.count()
@@ -60,3 +66,13 @@ class StocksView(generics.ListCreateAPIView):
                 row.save()
 
         return serializer.save(ticker=self.kwargs["ticker"])
+
+
+class StocksDestroyView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [PostPermission]
+
+    def delete(self, request, ticker):
+        last_row = Stocks.objects.order_by("id").last()
+        last_row.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
