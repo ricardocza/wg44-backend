@@ -15,6 +15,7 @@ from django.core.management.utils import get_random_secret_key
 import dj_database_url
 import os
 import dotenv
+from datetime import timedelta
 
 dotenv.load_dotenv()
 
@@ -49,7 +50,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRDY_PARTY_APPS = ["rest_framework"]
+THIRDY_PARTY_APPS = ["rest_framework", "corsheaders"]
 
 MY_APPS = ["db_logic", "users"]
 
@@ -59,6 +60,7 @@ AUTH_USER_MODEL = "users.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -66,6 +68,14 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_METHODS = [
+    "GET",
 ]
 
 ROOT_URLCONF = "_core.urls"
@@ -161,3 +171,14 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}

@@ -6,6 +6,7 @@ from .serializers import StocksSerializer
 from .models import Stocks
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .permissions import PostPermission
+from .pagination import CustomPagination
 
 
 # Create your views here.
@@ -13,6 +14,7 @@ class StocksView(generics.ListCreateAPIView):
     model = Stocks
     serializer_class = StocksSerializer
     queryset = Stocks.objects.all()
+    pagination_class = CustomPagination
     lookup_field = "ticker"
     authentication_classes = [JWTAuthentication]
     permission_classes = [PostPermission]
