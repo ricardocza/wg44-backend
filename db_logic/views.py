@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import StocksSerializer
+from .serializers import StocksSerializer, ListSerializer
 from .models import Stocks
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .permissions import PostPermission
@@ -10,7 +10,7 @@ from .pagination import CustomPagination
 
 
 # Create your views here.
-class StocksView(generics.ListCreateAPIView):
+class StocksView(generics.CreateAPIView):
     model = Stocks
     serializer_class = StocksSerializer
     queryset = Stocks.objects.all()
@@ -68,6 +68,16 @@ class StocksView(generics.ListCreateAPIView):
                 row.save()
 
         return serializer.save(ticker=self.kwargs["ticker"])
+
+
+class ListView(generics.ListAPIView):
+    model = Stocks
+    serializer_class = ListSerializer
+    queryset = Stocks.objects.all()
+    pagination_class = CustomPagination
+    lookup_field = "ticker"
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [PostPermission]
 
 
 class StocksDestroyView(APIView):
