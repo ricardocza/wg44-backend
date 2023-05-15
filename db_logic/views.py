@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Avg
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -76,8 +77,25 @@ class ListView(generics.ListAPIView):
     queryset = Stocks.objects.all()
     pagination_class = CustomPagination
     lookup_field = "ticker"
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [PostPermission]
+
+
+class ListAveragesView(generics.ListAPIView):
+    model = Stocks
+    queryset = Stocks.objects.exclude(
+        diff_6__isnull=True,
+    )
+
+    def get(self, request, *args, **kwargs):
+        mean_values = self.queryset.aggregate(
+            mean_diff_1=Avg("diff_1"),
+            mean_diff_2=Avg("diff_2"),
+            mean_diff_3=Avg("diff_3"),
+            mean_diff_4=Avg("diff_4"),
+            mean_diff_5=Avg("diff_5"),
+            mean_diff_6=Avg("diff_6"),
+        )
+
+        return Response(mean_values)
 
 
 class StocksDestroyView(APIView):
