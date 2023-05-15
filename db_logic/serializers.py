@@ -59,30 +59,6 @@ class ListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stocks
-        fields = [
-            "id",
-            "ticker",
-            "ticker_name",
-            "closed_price",
-            "pred_1",
-            "pred_2",
-            "pred_3",
-            "pred_4",
-            "pred_5",
-            "pred_6",
-            "diff_1",
-            "diff_2",
-            "diff_3",
-            "diff_4",
-            "diff_5",
-            "diff_6",
-            "error_1",
-            "error_2",
-            "error_3",
-            "error_4",
-            "error_5",
-            "error_6",
-            "created_at",
-        ]
+        fields = "__all__"
 
         read_only_fields = ["created_at", "ticker"]
