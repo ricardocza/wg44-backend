@@ -76,9 +76,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
 ]
 
-CORS_ALLOW_METHODS = [
-    "GET",
-]
+CORS_ALLOW_METHODS = ["GET", "POST"]
 
 ROOT_URLCONF = "_core.urls"
 
