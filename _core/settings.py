@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
-import dj_database_url
 import os
+import dj_database_url
 import dotenv
 from datetime import timedelta
 
@@ -34,9 +34,11 @@ SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 RAILWAY_STATIC_URL = os.getenv("RAILWAY_STATIC_URL")
 
 if RAILWAY_STATIC_URL:
+    # Configuramos o host permitindo que o nosso app Railway se conecte ao server do Django
     ALLOWED_HOSTS += [RAILWAY_STATIC_URL, "0.0.0.0"]
 
 
@@ -79,7 +81,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://wg44-frontend.vercel.app",
 ]
 
-CORS_ALLOW_METHODS = ["GET", "POST"]
+CORS_ALLOW_METHODS = ["GET"]
 
 ROOT_URLCONF = "_core.urls"
 
@@ -125,6 +127,9 @@ if DATABASE_URL:
     DATABASES["default"].update(db_from_env)
     DEBUG = False
 
+# (...)
+
+# 6. DEVE estar abaixo do código acima
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
