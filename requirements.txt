@@ -29,7 +29,7 @@ gunicorn==20.1.0
 h5py==3.8.0
 idna==3.4
 iniconfig==2.0.0
-ipython==8.13.1
+ipython==8.13.0
 jax==0.4.10
 jedi==0.18.2
 joblib==1.2.0
