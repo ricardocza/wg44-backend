@@ -70,10 +70,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+# DEVELOPMENT
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3000",
+# ]
 
 CORS_ORIGIN_WHITELIST = [
     "https://wg44-frontend.vercel.app",
-    "http://localhost:3000",
 ]
 
 CORS_ALLOW_METHODS = ["GET", "POST"]
