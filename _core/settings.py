@@ -79,6 +79,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     "https://wg44-frontend.vercel.app",
+    "http://localhost:3000",
 ]
 
 CORS_ALLOW_METHODS = ["GET"]
@@ -158,7 +159,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Sao_Paulo"
 
 USE_I18N = True
 
