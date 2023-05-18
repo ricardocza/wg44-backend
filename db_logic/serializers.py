@@ -9,7 +9,13 @@ class TimeField(serializers.DateTimeField):
 
 class RoundToFiveField(serializers.IntegerField):
     def to_representation(self, value):
-        return round(value / 5) * 5
+        current_ticker = self.context["request"].parser_context["kwargs"]["ticker"]
+        if current_ticker == "WINFUT":
+            return round(value / 5) * 5
+        elif current_ticker == "WDOFUT":
+            return round(value / 0.5) * 0.5
+        else:
+            return round(value / 0.01) * 0.01
 
 
 class StocksSerializer(serializers.ModelSerializer):
