@@ -84,9 +84,8 @@ class ListView(generics.ListAPIView):
     lookup_field = "ticker"
 
     def get(self, request, *args, **kwargs):
-        queryset = self.queryset.filter(ticker=self.kwargs["ticker"])
-        serialized_data = self.serializer_class(queryset, many=True)
-        return Response(serialized_data.data)
+        self.queryset = self.queryset.filter(ticker=self.kwargs["ticker"])
+        return self.list(request, *args, **kwargs)
 
 
 class ListAveragesView(APIView):
@@ -129,13 +128,17 @@ class LastCloseView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         asset_list = []
         prices = []
+        id = []
         queryset = Stocks.objects.values_list("id", "ticker", "closed_price")
         for i in range(len(queryset) - 1, -1, -1):
             if queryset[i][1] not in asset_list:
+                id.append(queryset[i][0])
                 asset_list.append(queryset[i][1])
                 prices.append(queryset[i][2])
 
         response = []
         for i in range(len(asset_list)):
-            response.append({"asset": asset_list[i], "last_price": prices[i]})
+            response.append(
+                {"id": id[i], "asset": asset_list[i], "last_price": prices[i]}
+            )
         return Response(response)

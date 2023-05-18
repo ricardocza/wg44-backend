@@ -2,7 +2,7 @@ from rest_framework.pagination import PageNumberPagination
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 50
+    page_size = 60
 
     def paginate_queryset(self, queryset, request, view=None):
         queryset = queryset.order_by("-id")
