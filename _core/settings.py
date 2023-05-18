@@ -81,7 +81,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://wg44-frontend.vercel.app",
 ]
 
-CORS_ALLOW_METHODS = ["GET"]
+CORS_ALLOW_METHODS = ["POST", "GET"]
 
 ROOT_URLCONF = "_core.urls"
 
