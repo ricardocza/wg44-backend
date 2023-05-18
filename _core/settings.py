@@ -79,10 +79,9 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     "https://wg44-frontend.vercel.app",
-    "http://localhost:3000",
 ]
 
-CORS_ALLOW_METHODS = ["POST", "GET"]
+CORS_ALLOW_METHODS = ["GET"]
 
 ROOT_URLCONF = "_core.urls"
 
