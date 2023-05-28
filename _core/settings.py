@@ -73,13 +73,13 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 # DEVELOPMENT
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-]
-
 # CORS_ORIGIN_WHITELIST = [
-#     "https://wg44-frontend.vercel.app",
+#     "http://localhost:3000",
 # ]
+
+CORS_ORIGIN_WHITELIST = [
+    "https://wg44-frontend.vercel.app",
+]
 
 CORS_ALLOW_METHODS = ["GET", "POST"]
 
