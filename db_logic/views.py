@@ -11,7 +11,6 @@ from .pagination import CustomPagination
 from django.forms.models import model_to_dict
 
 
-# Create your views here.
 class StocksView(generics.CreateAPIView):
     model = Stocks
     serializer_class = StocksSerializer

@@ -55,7 +55,7 @@ DJANGO_APPS = [
 
 THIRDY_PARTY_APPS = ["rest_framework", "corsheaders"]
 
-MY_APPS = ["db_logic", "users"]
+MY_APPS = ["db_logic", "users", "visits"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDY_PARTY_APPS + MY_APPS
 
@@ -81,7 +81,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://wg44-frontend.vercel.app",
 ]
 
-CORS_ALLOW_METHODS = ["GET"]
+CORS_ALLOW_METHODS = ["GET", "POST"]
 
 ROOT_URLCONF = "_core.urls"
 
