@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models import Avg, Count
+from django.db.models import Avg, Func, F
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -97,14 +97,23 @@ class ListAveragesView(APIView):
 
     def get(self, request, *args, **kwargs):
         queryset_filter = self.queryset.filter(ticker=kwargs["ticker"])
+        start_date = request.query_params.get("start_date")
+        end_date = request.query_params.get("end_date")
+
+        if start_date and end_date:
+            print(start_date, end_date)
+            queryset_filter = queryset_filter.filter(
+                created_at__range=[start_date, end_date]
+            )
+            print(queryset_filter.__dict__)
 
         mean_values = queryset_filter.aggregate(
-            mean_diff_1=Avg("diff_1"),
-            mean_diff_2=Avg("diff_2"),
-            mean_diff_3=Avg("diff_3"),
-            mean_diff_4=Avg("diff_4"),
-            mean_diff_5=Avg("diff_5"),
-            mean_diff_6=Avg("diff_6"),
+            mean_diff_1=Avg(Func(F("diff_1"), function="ABS")),
+            mean_diff_2=Avg(Func(F("diff_2"), function="ABS")),
+            mean_diff_3=Avg(Func(F("diff_3"), function="ABS")),
+            mean_diff_4=Avg(Func(F("diff_4"), function="ABS")),
+            mean_diff_5=Avg(Func(F("diff_5"), function="ABS")),
+            mean_diff_6=Avg(Func(F("diff_6"), function="ABS")),
         )
 
         return Response(mean_values)
