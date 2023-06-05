@@ -11,7 +11,6 @@ from .pagination import CustomPagination
 from django.forms.models import model_to_dict
 
 
-# Create your views here.
 class StocksView(generics.CreateAPIView):
     model = Stocks
     serializer_class = StocksSerializer
@@ -101,11 +100,9 @@ class ListAveragesView(APIView):
         end_date = request.query_params.get("end_date")
 
         if start_date and end_date:
-            print(start_date, end_date)
             queryset_filter = queryset_filter.filter(
                 created_at__range=[start_date, end_date]
             )
-            print(queryset_filter.__dict__)
 
         mean_values = queryset_filter.aggregate(
             mean_diff_1=Avg(Func(F("diff_1"), function="ABS")),

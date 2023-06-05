@@ -21,4 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/market/new/", include("db_logic.urls")),
     path("api/", include("users.urls")),
+    path("api/", include("visits.urls")),
 ]
